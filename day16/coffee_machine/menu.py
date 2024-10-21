@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 from pathlib import Path
 from drink import Drink
 import json
@@ -50,6 +50,9 @@ class Menu:
 
         if not self._drinks:
             logger.info("No se pudo cargar ninguna bebida del menú. El menú está vacío.")
+
+    def find_drink(self, drink_name: str) -> Optional[Drink]:
+        return self._drinks.get(drink_name)
 
     @property
     def available_drinks(self) -> List[str]:

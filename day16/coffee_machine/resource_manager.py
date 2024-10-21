@@ -2,9 +2,9 @@ from enum import Enum, auto
 from typing import Dict, Optional
 
 class ResourceType(Enum):
-    WATER = auto()
-    MILK = auto()
-    COFFEE = auto()
+    WATER = "water"
+    MILK = "milk"
+    COFFEE = "coffee"
 
 class ResourceManager:
     """
@@ -47,23 +47,24 @@ class ResourceManager:
 
         return None  # Todos los recursos son suficientes
 
-    def deduct_resources(self, used_resources: Dict[ResourceType, int]) -> None:
-        """
-        Deduce los recursos utilizados para preparar una bebida.
+    def get_resource(self, resource_type: ResourceType) -> int:
+        return self._resources.get(resource_type, 0)
 
-        Args:
-            used_resources (Dict[ResourceType, int]): Recursos utilizados en la preparación.
+    def set_resource(self, resource_type: ResourceType, amount: int) -> None:
+        if amount < 0:
+            raise ValueError(f"La cantidad para '{resource_type.name}' no puede ser negativa.")
+        self._resources[resource_type] = amount
 
-        Raises:
-            KeyError: Si un recurso no existe en la máquina.
-            ValueError: Si no hay suficientes recursos para deducir.
-        """
-        for resource, amount in used_resources.items():
-            if resource not in self._resources:
-                raise KeyError(f"El recurso '{resource.name}' no existe en la máquina.")
-            if self._resources[resource] < amount:
-                raise ValueError(f"No hay suficiente {resource.name} para deducir.")
-            self._resources[resource] -= amount
+    def get_capacity(self, resource_type: ResourceType) -> int:
+        # Asumimos que la capacidad es el doble del valor inicial
+        return self._resources.get(resource_type, 0) * 2
+
+    def use_resource(self, resource_type: ResourceType, amount: int) -> None:
+        if resource_type not in self._resources:
+            raise KeyError(f"El recurso '{resource_type.name}' no existe en la máquina.")
+        if self._resources[resource_type] < amount:
+            raise ValueError(f"No hay suficiente {resource_type.name} para usar.")
+        self._resources[resource_type] -= amount
 
     def add_resources(self, added_resources: Dict[ResourceType, int]) -> None:
         """

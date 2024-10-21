@@ -1,0 +1,9 @@
+{
+  "initial_resources": {
+    "water": 300,
+    "milk": 200,
+    "coffee": 100
+  },
+  "initial_balance": 0,
+  "menu_file": "data/menu_data.json"
+}

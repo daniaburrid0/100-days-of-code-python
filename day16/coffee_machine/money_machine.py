@@ -97,6 +97,16 @@ class MoneyMachine:
         print(f"¡Pago exitoso! Disfrute su bebida.")
         return True
 
+    def add_money(self, amount: float) -> None:
+        self._profit += Decimal(str(amount)).quantize(Decimal(f'0.{self.DECIMAL_PLACES * "0"}'), rounding=ROUND_HALF_UP)
+        self._num_transactions += 1
+
+    def get_earnings(self) -> float:
+        return float(self._profit)
+
+    def set_earnings(self, amount: float) -> None:
+        self._profit = Decimal(str(amount)).quantize(Decimal(f'0.{self.DECIMAL_PLACES * "0"}'), rounding=ROUND_HALF_UP)
+
     @property
     def profit(self) -> Decimal:
         """

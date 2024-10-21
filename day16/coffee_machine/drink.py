@@ -25,5 +25,9 @@ class Drink:
     def price(self) -> float:
         return self._price
 
+    @property
+    def cost(self) -> float:
+        return self._price  # Alias para price
+
     def __repr__(self) -> str:
         return f"Drink(name='{self._name}', ingredients={self._ingredients}, price={self._price})"
